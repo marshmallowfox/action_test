@@ -1,0 +1,27 @@
+name: Rollback Deployment
+
+# Ручной запуск workflow с выбором версии для отката
+on:
+  workflow_dispatch:
+    inputs:
+      rollback_tag:
+        description: 'Введите тег для отката (например, v22)'
+        required: true
+        default: 'v22'
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code from rollback tag
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.rollback_tag }}
+
+      - name: Rollback Deployment
+        run: |
+          echo "Откат к версии ${{ github.event.inputs.rollback_tag }}..."
+          # Добавьте команды для деплоя кода из выбранного тега,
+          # например, аналогичные шагам в файле deploy.yml:
+          # scp -r ./build user@server:/var/www/app
+          # или вызов скрипта отката

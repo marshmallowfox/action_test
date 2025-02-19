@@ -1,0 +1,25 @@
+name: Deploy Release
+
+# Запуск workflow при пуше тега вида v*
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Environment
+        run: |
+          echo "Подготавливаем окружение для деплоя..."
+
+      - name: Deploy to Production
+        run: |
+          echo "Деплой версии ${GITHUB_REF}..."
+          # Здесь разместите ваши команды деплоя, например:
+          # scp -r ./build user@server:/var/www/app
+          # или вызов скрипта деплоя
